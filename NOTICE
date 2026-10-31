@@ -1,0 +1,39 @@
+telemetry-api
+Copyright (c) 2026 Equipo de Telemetría Ambiental IoT
+
+Este producto incluye software desarrollado por terceros:
+
+1. FastAPI (https://fastapi.tiangolo.com)
+   Licencia: MIT
+   Copyright (c) 2018 Sebastián Ramírez
+
+2. SQLAlchemy (https://www.sqlalchemy.org)
+   Licencia: MIT
+   Copyright (c) 2005-2026 Michael Bayer y colaboradores
+
+3. Pydantic (https://docs.pydantic.dev)
+   Licencia: MIT
+   Copyright (c) 2017-2026 Samuel Colvin y colaboradores
+
+4. Uvicorn (https://www.uvicorn.org)
+   Licencia: BSD 3-Clause
+   Copyright (c) 2017-present Tom Christie y colaboradores
+
+5. asyncpg (https://github.com/MagicStack/asyncpg)
+   Licencia: Apache 2.0
+   Copyright (c) 2016-present MagicStack Inc.
+
+6. PostgreSQL (https://www.postgresql.org)
+   Licencia: PostgreSQL License (similar a BSD/MIT)
+   Copyright (c) 1996-2026 The PostgreSQL Global Development Group
+
+7. Nginx (https://nginx.org)
+   Licencia: BSD 2-Clause
+   Copyright (c) 2002-2026 Igor Sysoev, Nginx Inc.
+
+8. slowapi (https://github.com/laurentS/slowapi)
+   Licencia: MIT
+   Copyright (c) Laurent S.
+
+Consulte el repositorio de cada proyecto para obtener el texto completo
+de sus respectivas licencias.

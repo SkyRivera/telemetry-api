@@ -1,0 +1,48 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: telemetry-postgres
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-telemetry_db}
+      POSTGRES_USER: ${POSTGRES_USER:-telemetry_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-secure_password_change_me}
+      TZ: UTC
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./db/init.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-telemetry_user} -d ${POSTGRES_DB:-telemetry_db}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - telemetry-net
+
+  telemetry-api:
+    build: .
+    container_name: telemetry-api
+    environment:
+      DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER:-telemetry_user}:${POSTGRES_PASSWORD:-secure_password_change_me}@postgres:5432/${POSTGRES_DB:-telemetry_db}
+      API_KEY_ESP32: ${API_KEY_ESP32:-esp32-secret-key-change-me}
+      API_KEY_API_B: ${API_KEY_API_B:-api-b-secret-key-change-me}
+      READ_REQUEST_TIMEOUT_SECONDS: ${READ_REQUEST_TIMEOUT_SECONDS:-300}
+      RATE_LIMIT_DEFAULT: ${RATE_LIMIT_DEFAULT:-100/minute}
+      DEBUG: ${DEBUG:-false}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "0.0.0.0:8000:8000"
+    restart: unless-stopped
+    networks:
+      - telemetry-net
+
+volumes:
+  postgres_data:
+
+networks:
+  telemetry-net:
+    driver: bridge
